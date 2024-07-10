@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/cli",
-  "version": "0.0.112",
+  "version": "0.0.125",
   "private": false,
   "type": "module",
   "description": "Command line tool for developing, publishing and installing tscircuit circuits",
@@ -9,16 +9,16 @@
     "bootstrap": "bun i && cd dev-server-api && bun i && cd ../dev-server-frontend && bun i",
     "bootstrap:ci": "bun i --frozen-lockfile && cd dev-server-api && bun i --frozen-lockfile && cd ../dev-server-frontend && bun i --frozen-lockfile",
     "start": "bun cli.ts",
-    "dev": "TSCI_DEV_SERVER_DB=$(pwd)/.tscircuit/dev-server.sqlite concurrently 'cd dev-server-api && bun run build && bun start' 'cd dev-server-frontend && bun start' 'bun run dev-with-test-project'",
+    "dev": "TSCI_DEV_SERVER_DB=$(pwd)/.tscircuit/devdb concurrently 'cd dev-server-api && bun run build && bun start' 'cd dev-server-frontend && bun start' 'bun run dev-with-test-project'",
     "clear": "rm -rf .tscircuit ./dev-server-api/.edgespec",
-    "start:dev-server": "bun build:dev-server && bun cli.ts dev -y --cwd ./tests/assets/example-project",
+    "start:dev-server": "bun build:dev-server && bun cli.ts dev -y --cwd ./example-project",
     "build:dev-server": "cd dev-server-api && bun run build && cd ../dev-server-frontend && bun run build",
     "build:dev-server:api": "cd dev-server-api && bun run build",
     "build:cli": "bun build-cli.ts",
     "build": "bun build:dev-server && npm run build:cli",
-    "dev-with-test-project": "bun cli.ts dev --cwd ./tests/assets/example-project",
+    "dev-with-test-project": "bun cli.ts dev --cwd ./example-project",
     "test:init": "bun cli.ts init --dir ./tmp/test --name test",
-    "update-deps": "bun add @tscircuit/builder@latest @tscircuit/react-fiber@latest && cd dev-server-frontend && bun run update-deps && cd ../tests/assets/example-project && bun run update-deps"
+    "update-deps": "bun add @tscircuit/builder@latest @tscircuit/react-fiber@latest && cd dev-server-frontend && bun run update-deps && cd ../example-project && bun run update-deps"
   },
   "bin": {
     "tsci": "./dist/cli.js"
@@ -39,7 +39,6 @@
     "@typescript-eslint/parser": "^7.16.0",
     "archiver": "^7.0.1",
     "axios": "^1.6.7",
-    "better-sqlite3": "^11.1.2",
     "chokidar": "^3.6.0",
     "commander": "^12.0.0",
     "configstore": "^6.0.0",
@@ -56,8 +55,8 @@
     "ignore": "^5.3.1",
     "json5": "^2.2.3",
     "kleur": "^4.1.5",
-    "kysely-bun-sqlite": "^0.3.2",
     "lodash": "^4.17.21",
+    "memory-level": "^1.0.0",
     "mime-types": "^2.1.35",
     "minimist": "^1.2.8",
     "node-persist": "^4.0.1",
@@ -68,6 +67,7 @@
     "semver": "^7.6.0",
     "ts-morph": "^22.0.0",
     "tsup": "^8.0.2",
+    "winterspec": "0.0.81",
     "zod": "latest"
   },
   "peerDependencies": {
@@ -79,10 +79,10 @@
   },
   "devDependencies": {
     "@tscircuit/builder": "*",
-    "@tscircuit/layout": "^0.0.20",
-    "@tscircuit/manual-edit-events": "^0.0.4",
+    "@tscircuit/layout": "^0.0.24",
     "@tscircuit/react-fiber": "*",
-    "@tscircuit/soup-util": "^0.0.1",
+    "@tscircuit/soup-util": "^0.0.11",
+    "@tscircuit/manual-edit-events": "^0.0.4",
     "@types/archiver": "^6.0.2",
     "@types/bun": "^1.0.8",
     "@types/chokidar": "^2.1.3",
